@@ -21,50 +21,125 @@ function pmpro_member_history_profile_fields($user)
 	
 	//Show all invoices for user
 	$invoices = $wpdb->get_results("SELECT *, UNIX_TIMESTAMP(timestamp) as timestamp FROM $wpdb->pmpro_membership_orders WHERE user_id = '$user->ID' AND (status = 'success' OR status = 'cancelled' OR status = 'refunded' OR status = '') ORDER BY timestamp DESC");
-	if($invoices)
+	$levelshistory = $wpdb->get_results("SELECT * FROM $wpdb->pmpro_memberships_users WHERE user_id = '$user->ID' ORDER BY id DESC");
+	if($invoices || $levelshistory)
 	{
 		?>
 		<hr />
 		<h3><?php _e("Member History", "pmpro"); ?></h3>
-		<table class="wp-list-table widefat fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
-		<thead>
-			<tr>
-				<th><?php _e('Date', 'pmpro'); ?></th>
-				<th><?php _e('Membership Level', 'pmpro'); ?></th>
-				<th><?php _e('Invoice ID', 'pmpro'); ?></th>
-				<th><?php _e('Total Billed', 'pmpro'); ?></th>
-				<th><?php _e('Status', 'pmpro'); ?></th>
-				<th>&nbsp;</th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php
-			$count = 0;
-			foreach($invoices as $invoice)
-			{ 
-				$level = pmpro_getLevel($invoice->membership_id);
-				?>
-				<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
-					<td><?php echo date(get_option("date_format"), $invoice->timestamp)?></td>
-					<td><?php echo $level->name;?></td>
-					<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php echo $invoice->code; ?></a></td>
-					<td><?php echo pmpro_formatPrice($invoice->total);?></td>					
-					<td>
-						<?php 
-							if(empty($invoice->status))
-								echo '-';
-							else
-								echo $invoice->status; 
-						?>
-					</td>
-					<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php _e('View Order', 'pmpro'); ?></a>
-					</td>
+		<ul id="member-history-filters" class="subsubsub">
+			<li id="member-history-filters-orders"><a href="javascript:void(0);" class="current orders tab">Order History</a> <span>(<?php echo count($invoices); ?>)</span></li>
+			<li id="member-history-filters-memberships">| <a href="javascript:void(0);>" class="tab">Membership Levels History</a> <span>(<?php echo count($levelshistory); ?>)</span></li>
+		</ul>
+		<br class="clear"/>
+		<div id="member-history-orders" class="widgets-holder-wrap">
+		<?php if($invoices) { ?>
+			<table class="wp-list-table widefat fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
+			<thead>
+				<tr>
+					<th><?php _e('Date', 'pmpro'); ?></th>
+					<th><?php _e('Membership Level', 'pmpro'); ?></th>
+					<th><?php _e('Invoice ID', 'pmpro'); ?></th>
+					<th><?php _e('Total Billed', 'pmpro'); ?></th>
+					<th><?php _e('Status', 'pmpro'); ?></th>
+					<th>&nbsp;</th>
 				</tr>
-				<?php
-			}
-		?>
-		</tbody>
-		</table>
+			</thead>
+			<tbody>
+			<?php
+				$count = 0;
+				foreach($invoices as $invoice)
+				{ 
+					$level = pmpro_getLevel($invoice->membership_id);
+					?>
+					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
+						<td><?php echo date(get_option("date_format"), $invoice->timestamp)?></td>
+						<td><?php echo $level->name;?></td>
+						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php echo $invoice->code; ?></a></td>
+						<td><?php echo pmpro_formatPrice($invoice->total);?></td>					
+						<td>
+							<?php 
+								if(empty($invoice->status))
+									echo '-';
+								else
+									echo $invoice->status; 
+							?>
+						</td>
+						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php _e('View Order', 'pmpro'); ?></a>
+						</td>
+					</tr>
+					<?php
+				}
+			?>
+			</tbody>
+			</table>
+			<?php } else { echo 'No membership orders found.'; } ?>
+		</div>
+		<div id="member-history-memberships" class="widgets-holder-wrap" style="display: none;">
+		<?php if($levelshistory) { ?>
+			<table class="wp-list-table widefat fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
+			<thead>
+				<tr>
+					<th><?php _e('Date', 'pmpro'); ?></th>
+					<th><?php _e('Membership Level', 'pmpro'); ?></th>
+					<th><?php _e('Level Cost', 'pmpro'); ?></th>
+					<th><?php _e('Status', 'pmpro'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+				$count = 0;
+				foreach($levelshistory as $levelhistory)
+				{ 
+					$level = pmpro_getLevel($levelhistory->membership_id);
+					?>
+					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
+						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
+						<td><?php echo $level->name;?></td>
+						<td><?php echo pmpro_getLevelCost($levelhistory, true, true)?></td>					
+						<td>
+							<?php 
+								if(empty($levelhistory->status))
+									echo '-';
+								else
+									echo $levelhistory->status; 
+							?>
+						</td>
+					</tr>
+					<?php
+				}
+			?>
+			</tbody>
+			</table>
+			<?php } else { echo 'No membership history found.'; } ?>
+		</div>
+		<script>
+			//tabs
+			jQuery(document).ready(function() {
+				jQuery('#member-history-filters a.tab').click(function() {
+					//which tab?
+					var tab = jQuery(this).parent().attr('id').replace('member-history-filters-', '');
+					
+					//un select tabs
+					jQuery('#member-history-filters a.tab').removeClass('current');
+					
+					//select this tab
+					jQuery('#member-history-filters-'+tab+' a').addClass('current');
+					
+					//show orders?
+					if(tab == 'orders')
+					{
+						jQuery('#member-history-memberships').hide();
+						jQuery('#member-history-orders').show();
+					}
+					else
+					{
+						jQuery('div#member-history-orders').hide();
+						jQuery('#member-history-memberships').show();
+					}
+				});
+			});
+		</script>
 		<?php
 	}	
 }
