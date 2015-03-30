@@ -80,8 +80,10 @@ function pmpro_member_history_profile_fields($user)
 			<table class="wp-list-table widefat fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
 			<thead>
 				<tr>
-					<th><?php _e('Date', 'pmpro'); ?></th>
 					<th><?php _e('Membership Level', 'pmpro'); ?></th>
+					<th><?php _e('Start Date', 'pmpro'); ?></th>
+					<th><?php _e('Date Modified', 'pmpro'); ?></th>
+					<th><?php _e('End Date', 'pmpro'); ?></th>
 					<th><?php _e('Level Cost', 'pmpro'); ?></th>
 					<th><?php _e('Status', 'pmpro'); ?></th>
 				</tr>
@@ -91,11 +93,14 @@ function pmpro_member_history_profile_fields($user)
 				$count = 0;
 				foreach($levelshistory as $levelhistory)
 				{ 
+					d($levelhistory);
 					$level = pmpro_getLevel($levelhistory->membership_id);
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
-						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
 						<td><?php echo $level->name;?></td>
+						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->startdate))?></td>
+						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
+						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->enddate))?></td>
 						<td><?php echo pmpro_getLevelCost($levelhistory, true, true)?></td>					
 						<td>
 							<?php 
