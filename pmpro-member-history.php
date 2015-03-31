@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Member History Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-member-history/
 Description: Display a history of a user's Membership on the User Profile for admins only.
-Version: .1
+Version: .2.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -29,7 +29,7 @@ function pmpro_member_history_profile_fields($user)
 		<h3><?php _e("Member History", "pmpro"); ?></h3>
 		<ul id="member-history-filters" class="subsubsub">
 			<li id="member-history-filters-orders"><a href="javascript:void(0);" class="current orders tab">Order History</a> <span>(<?php echo count($invoices); ?>)</span></li>
-			<li id="member-history-filters-memberships">| <a href="javascript:void(0);>" class="tab">Membership Levels History</a> <span>(<?php echo count($levelshistory); ?>)</span></li>
+			<li id="member-history-filters-memberships">| <a href="javascript:void(0);" class="tab">Membership Levels History</a> <span>(<?php echo count($levelshistory); ?>)</span></li>
 		</ul>
 		<br class="clear"/>
 		<div id="member-history-orders" class="widgets-holder-wrap">
@@ -92,8 +92,7 @@ function pmpro_member_history_profile_fields($user)
 			<?php
 				$count = 0;
 				foreach($levelshistory as $levelhistory)
-				{ 
-					d($levelhistory);
+				{
 					$level = pmpro_getLevel($levelhistory->membership_id);
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
