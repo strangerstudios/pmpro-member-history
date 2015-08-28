@@ -94,12 +94,17 @@ function pmpro_member_history_profile_fields($user)
 				foreach($levelshistory as $levelhistory)
 				{
 					$level = pmpro_getLevel($levelhistory->membership_id);
+					
+					if($levelhistory->enddate === null)
+						$levelhistory->enddate = "Never";
+					else
+						$levelhistory->enddate = date(get_option("date_format"), strtotime($levelhistory->enddate));
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
 						<td><?php echo $level->name;?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->startdate))?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
-						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->enddate))?></td>
+						<td><?php echo $levelhistory->enddate;?></td>
 						<td><?php echo pmpro_getLevelCost($levelhistory, true, true)?></td>					
 						<td>
 							<?php 
