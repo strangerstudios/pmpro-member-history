@@ -20,8 +20,8 @@ function pmpro_member_history_profile_fields($user)
 	global $wpdb;
 	
 	//Show all invoices for user
-	$invoices = $wpdb->get_results("SELECT *, UNIX_TIMESTAMP(timestamp) as timestamp FROM $wpdb->pmpro_membership_orders WHERE user_id = '$user->ID' AND (status = 'success' OR status = 'cancelled' OR status = 'refunded' OR status = '') ORDER BY timestamp DESC");
-	$levelshistory = $wpdb->get_results("SELECT * FROM $wpdb->pmpro_memberships_users WHERE user_id = '$user->ID' ORDER BY id DESC");
+        $invoices = $wpdb->get_results("SELECT mo.*, UNIX_TIMESTAMP(mo.timestamp) as timestamp, du.code_id as code_id FROM $wpdb->pmpro_membership_orders mo LEFT JOIN $wpdb->pmpro_discount_codes_uses du ON mo.id = du.order_id WHERE mo.user_id = '$user->ID' AND (mo.status = 'success' OR mo.status = 'cancelled' OR mo.status = 'refunded' OR mo.status = '') ORDER BY mo.timestamp DESC");
+        $levelshistory = $wpdb->get_results("SELECT * FROM $wpdb->pmpro_memberships_users WHERE user_id = '$user->ID' ORDER BY id DESC");
 	if($invoices || $levelshistory)
 	{
 		?>
@@ -41,6 +41,7 @@ function pmpro_member_history_profile_fields($user)
 					<th><?php _e('Membership Level', 'pmpro'); ?></th>
 					<th><?php _e('Invoice ID', 'pmpro'); ?></th>
 					<th><?php _e('Total Billed', 'pmpro'); ?></th>
+					<th><?php _e('Discount Used', 'pmpro'); ?></th>
 					<th><?php _e('Status', 'pmpro'); ?></th>
 					<th>&nbsp;</th>
 				</tr>
@@ -56,7 +57,18 @@ function pmpro_member_history_profile_fields($user)
 						<td><?php echo date(get_option("date_format"), $invoice->timestamp)?></td>
 						<td><?php echo $level->name;?></td>
 						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php echo $invoice->code; ?></a></td>
-						<td><?php echo pmpro_formatPrice($invoice->total);?></td>					
+						<td><?php echo pmpro_formatPrice($invoice->total);?></td>
+                                                <td>							
+                                                         <?php 
+								if(empty($invoice->code_id)){
+									echo '-';
+								}else{
+                                                                        $discountQuery = "SELECT c.code FROM $wpdb->pmpro_discount_codes c WHERE c.id = ".$invoice->code_id." LIMIT 1";                        
+                                                                        $discount_code = $wpdb->get_row( $discountQuery );
+									echo '<a href="admin.php?page=pmpro-discountcodes&edit='.$invoice->code_id.'">'.$discount_code->code.'</a>'; 
+                                                                }
+							?>
+                                                </td>	
 						<td>
 							<?php 
 								if(empty($invoice->status))
