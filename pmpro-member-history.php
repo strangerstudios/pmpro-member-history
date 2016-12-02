@@ -51,10 +51,11 @@ function pmpro_member_history_profile_fields($user)
 				foreach($invoices as $invoice)
 				{ 
 					$level = pmpro_getLevel($invoice->membership_id);
+					
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
 						<td><?php echo date(get_option("date_format"), $invoice->timestamp)?></td>
-						<td><?php echo $level->name;?></td>
+						<td><?php echo ( isset( $level->name ) ? $level->name : 'Not found' ); ?></td>
 						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php echo $invoice->code; ?></a></td>
 						<td><?php echo pmpro_formatPrice($invoice->total);?></td>					
 						<td>
@@ -101,7 +102,7 @@ function pmpro_member_history_profile_fields($user)
 						$levelhistory->enddate = date(get_option("date_format"), strtotime($levelhistory->enddate));
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
-						<td><?php echo $level->name;?></td>
+						<td><?php echo ( isset($level->name) ? $level->name : 'Not found' );?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->startdate))?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
 						<td><?php echo $levelhistory->enddate;?></td>
