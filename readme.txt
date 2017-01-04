@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, members, history
 Requires at least: 3.5
-Tested up to: 4.3
-Stable tag: .2.2
+Tested up to: 4.7
+Stable tag: .2.3
 
 Display a history of a user's Membership on the User Profile for admins only.
 
@@ -12,6 +12,9 @@ Display a history of a user's Membership on the User Profile for admins only.
 This plugin adds a Membership History section to the user profile, allowing you to view (in one place) all the membership levels held by the specific user. The history view is visible to admins only.
 
 == Changelog ==
+= .2.3 =
+* BUG: Fixed invalid expiry date in member history for members who have none (again). :)
+
 = .2.2 =
 * BUG: Fixed invalid expiry date in member history for members who have none
 
