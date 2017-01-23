@@ -276,7 +276,7 @@ function pmpro_report_member_value_page()
 		$theusers = $wpdb->get_results($sqlQuery);
 		$totalrows = $wpdb->get_var("SELECT FOUND_ROWS() as found_rows");
 
-		d($theusers);
+//		d($theusers);
 		if($theusers)
 		{
 			?>
