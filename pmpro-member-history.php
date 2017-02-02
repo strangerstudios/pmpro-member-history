@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Member History Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-member-history/
 Description: Display a history of a user's Membership on the User Profile for admins only.
-Version: .2.4
+Version: .2.4.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -275,8 +275,7 @@ function pmpro_report_member_value_page()
 
 		$theusers = $wpdb->get_results($sqlQuery);
 		$totalrows = $wpdb->get_var("SELECT FOUND_ROWS() as found_rows");
-
-		d($theusers);
+		
 		if($theusers)
 		{
 			?>
