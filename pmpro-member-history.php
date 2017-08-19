@@ -45,6 +45,7 @@ function pmpro_member_history_profile_fields($user)
 					<th><?php _e('Total Billed', 'pmpro'); ?></th>
 					<th><?php _e('Discount Used', 'pmpro'); ?></th>
 					<th><?php _e('Status', 'pmpro'); ?></th>
+					<?php do_action('pmpromh_orders_extra_cols_header');?>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -78,6 +79,7 @@ function pmpro_member_history_profile_fields($user)
 									echo $invoice->status; 
 							?>
 						</td>
+						<?php do_action('pmpromh_orders_extra_cols_body', $invoice);?>
 						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php _e('View Order', 'pmpro'); ?></a>
 						</td>
 					</tr>
@@ -99,6 +101,7 @@ function pmpro_member_history_profile_fields($user)
 					<th><?php _e('End Date', 'pmpro'); ?></th>
 					<th><?php _e('Level Cost', 'pmpro'); ?></th>
 					<th><?php _e('Status', 'pmpro'); ?></th>
+					<?php do_action('pmpromh_member_history_extra_cols_header'); ?>
 				</tr>
 			</thead>
 			<tbody>
@@ -127,6 +130,7 @@ function pmpro_member_history_profile_fields($user)
 									echo $levelhistory->status; 
 							?>
 						</td>
+						<?php do_action('pmpromh_member_history_extra_cols_body', $user, $level); ?>
 					</tr>
 					<?php
 				}
