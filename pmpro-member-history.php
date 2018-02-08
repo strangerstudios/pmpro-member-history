@@ -27,11 +27,11 @@ function pmpro_member_history_profile_fields($user)
 	{
 		?>
 		<hr />
-		<h3><?php _e('Member History', 'pmpro'); ?></h3>
-		<p><strong><?php _e('Total Paid', 'pmpro'); ?></strong> <?php echo pmpro_formatPrice($totalvalue); ?></p>
+		<h3><?php _e('Member History', 'pmpro-member-history'); ?></h3>
+		<p><strong><?php _e('Total Paid', 'pmpro-member-history'); ?></strong> <?php echo pmpro_formatPrice($totalvalue); ?></p>
 		<ul id="member-history-filters" class="subsubsub">
-			<li id="member-history-filters-orders"><a href="javascript:void(0);" class="current orders tab"><?php _e('Order History', 'pmpro'); ?></a> <span>(<?php echo count($invoices); ?>)</span></li>
-			<li id="member-history-filters-memberships">| <a href="javascript:void(0);" class="tab"><?php _e('Membership Levels History', 'pmpro'); ?></a> <span>(<?php echo count($levelshistory); ?>)</span></li>
+			<li id="member-history-filters-orders"><a href="javascript:void(0);" class="current orders tab"><?php _e('Order History', 'pmpro-member-history'); ?></a> <span>(<?php echo count($invoices); ?>)</span></li>
+			<li id="member-history-filters-memberships">| <a href="javascript:void(0);" class="tab"><?php _e('Membership Levels History', 'pmpro-member-history'); ?></a> <span>(<?php echo count($levelshistory); ?>)</span></li>
 		</ul>
 		<br class="clear"/>
 		<div id="member-history-orders" class="widgets-holder-wrap">
@@ -39,12 +39,12 @@ function pmpro_member_history_profile_fields($user)
 			<table class="wp-list-table widefat fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
 			<thead>
 				<tr>
-					<th><?php _e('Date', 'pmpro'); ?></th>
-					<th><?php _e('Membership Level', 'pmpro'); ?></th>
-					<th><?php _e('Invoice ID', 'pmpro'); ?></th>
-					<th><?php _e('Total Billed', 'pmpro'); ?></th>
-					<th><?php _e('Discount Used', 'pmpro'); ?></th>
-					<th><?php _e('Status', 'pmpro'); ?></th>
+					<th><?php _e('Date', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Membership Level', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Invoice ID', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Total Billed', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Discount Used', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Status', 'pmpro-member-history'); ?></th>
 					<?php do_action('pmpromh_orders_extra_cols_header');?>
 					<th>&nbsp;</th>
 				</tr>
@@ -58,7 +58,7 @@ function pmpro_member_history_profile_fields($user)
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
 						<td><?php echo date(get_option("date_format"), $invoice->timestamp)?></td>
-						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro'); } ;?></td>
+						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php echo $invoice->code; ?></a></td>
 						<td><?php echo pmpro_formatPrice($invoice->total);?></td>
 						<td><?php 
@@ -80,7 +80,7 @@ function pmpro_member_history_profile_fields($user)
 							?>
 						</td>
 						<?php do_action('pmpromh_orders_extra_cols_body', $invoice);?>
-						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php _e('View Order', 'pmpro'); ?></a>
+						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php _e('View Order', 'pmpro-member-history'); ?></a>
 						</td>
 					</tr>
 					<?php
@@ -88,19 +88,19 @@ function pmpro_member_history_profile_fields($user)
 			?>
 			</tbody>
 			</table>
-			<?php } else { _e('No membership orders found.', 'pmpro'); } ?>
+			<?php } else { _e('No membership orders found.', 'pmpro-member-history'); } ?>
 		</div>
 		<div id="member-history-memberships" class="widgets-holder-wrap" style="display: none;">
 		<?php if($levelshistory) { ?>
 			<table class="wp-list-table widefat fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
 			<thead>
 				<tr>
-					<th><?php _e('Membership Level', 'pmpro'); ?></th>
-					<th><?php _e('Start Date', 'pmpro'); ?></th>
-					<th><?php _e('Date Modified', 'pmpro'); ?></th>
-					<th><?php _e('End Date', 'pmpro'); ?></th>
-					<th><?php _e('Level Cost', 'pmpro'); ?></th>
-					<th><?php _e('Status', 'pmpro'); ?></th>
+					<th><?php _e('Membership Level', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Start Date', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Date Modified', 'pmpro-member-history'); ?></th>
+					<th><?php _e('End Date', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Level Cost', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Status', 'pmpro-member-history'); ?></th>
 					<?php do_action('pmpromh_member_history_extra_cols_header'); ?>
 				</tr>
 			</thead>
@@ -117,7 +117,7 @@ function pmpro_member_history_profile_fields($user)
 						$levelhistory->enddate = date(get_option("date_format"), strtotime($levelhistory->enddate));															
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
-						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro'); } ;?></td>
+						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->startdate))?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
 						<td><?php echo $levelhistory->enddate;?></td>
@@ -137,7 +137,7 @@ function pmpro_member_history_profile_fields($user)
 			?>
 			</tbody>
 			</table>
-			<?php } else { _e('No membership history found.', 'pmpro'); } ?>
+			<?php } else { _e('No membership history found.', 'pmpro-member-history'); } ?>
 		</div>
 		<script>
 			//tabs
@@ -174,7 +174,7 @@ add_action('show_user_profile', 'pmpro_member_history_profile_fields');
 
 
 global $pmpro_reports;
-$pmpro_reports['member_value'] = __('Member Value Report', 'pmpromh');
+$pmpro_reports['member_value'] = __('Member Value Report', 'pmpro-member-history');
 function pmpro_report_member_value_widget()
 {	
 ?>
@@ -186,7 +186,7 @@ function pmpro_report_member_value_page()
 {
 ?>
 <h2>
-	<?php _e('Member Value Report', 'pmpromh');?>
+	<?php _e('Member Value Report', 'pmpro-member-history');?>
 </h2>
 <?php
 	
@@ -207,9 +207,9 @@ function pmpro_report_member_value_page()
 	<form id="posts-filter" method="get" action="">
 	<ul class="subsubsub">
 		<li>
-			<?php _e('Show', 'pmpro');?>
+			<?php _e('Show', 'pmpro-member-history');?>
 			<select name="l" onchange="jQuery('#posts-filter').submit();">
-				<option value="" <?php if(!$l) { ?>selected="selected"<?php } ?>><?php _e('All Levels', 'pmpro');?></option>
+				<option value="" <?php if(!$l) { ?>selected="selected"<?php } ?>><?php _e('All Levels', 'pmpro-member-history');?></option>
 				<?php
 					$levels = $wpdb->get_results("SELECT id, name FROM $wpdb->pmpro_membership_levels ORDER BY name");
 					foreach($levels as $level)
@@ -223,10 +223,10 @@ function pmpro_report_member_value_page()
 		</li>
 	</ul>
 	<p class="search-box">
-		<label class="hidden" for="post-search-input"><?php _e('Search Members', 'pmpro');?>:</label>
+		<label class="hidden" for="post-search-input"><?php _e('Search Members', 'pmpro-member-history');?>:</label>
 		<input type="hidden" name="page" value="pmpro-memberslist" />
 		<input id="post-search-input" type="text" value="<?php echo esc_attr($s);?>" name="s"/>
-		<input class="button" type="submit" value="<?php _e('Search Members', 'pmpro');?>"/>
+		<input class="button" type="submit" value="<?php _e('Search Members', 'pmpro-member-history');?>"/>
 	</p>
 	<?php
 		//some vars for the search
@@ -294,20 +294,20 @@ function pmpro_report_member_value_page()
 		if($theusers)
 		{
 			?>
-			<p class="clear"><?php printf(__("%d members found.", "pmpro"), $totalrows);?></span></p>
+			<p class="clear"><?php printf(__("%d members found.", "pmpro-member-history"), $totalrows);?></span></p>
 			<?php
 		}
 	?>
 	<table class="widefat">
 		<thead>
 			<tr class="thead">
-				<th><?php _e('ID', 'pmpro');?></th>
-				<th><?php _e('Username', 'pmpro');?></th>
-				<th><?php _e('Name', 'pmpro');?></th>
-				<th><?php _e('Current&nbsp;Membership', 'pmpro');?></th>
-				<th><?php _e('Joined', 'pmpro');?></th>
-				<th><?php _e('Expires', 'pmpro'); ?></th>
-				<th><?php _e('Total&nbsp;Paid', 'pmpro');?></th>
+				<th><?php _e('ID', 'pmpro-member-history');?></th>
+				<th><?php _e('Username', 'pmpro-member-history');?></th>
+				<th><?php _e('Name', 'pmpro-member-history');?></th>
+				<th><?php _e('Current&nbsp;Membership', 'pmpro-member-history');?></th>
+				<th><?php _e('Joined', 'pmpro-member-history');?></th>
+				<th><?php _e('Expires', 'pmpro-member-history'); ?></th>
+				<th><?php _e('Total&nbsp;Paid', 'pmpro-member-history');?></th>
 			</tr>
 		</thead>
 		<tbody id="users" class="list:user user-list">
@@ -345,7 +345,7 @@ function pmpro_report_member_value_page()
 									if($auser->enddate)
 										echo apply_filters("pmpro_memberslist_expires_column", date(get_option('date_format'), $auser->enddate), $auser);
 									else
-										echo __(apply_filters("pmpro_memberslist_expires_column", "Never", $auser), "pmpro");
+										echo __(apply_filters("pmpro_memberslist_expires_column", "Never", $auser), "pmpro-member-history");
 								?>
 							</td>
 							<td>
@@ -359,7 +359,7 @@ function pmpro_report_member_value_page()
 				{
 				?>
 				<tr>
-					<td colspan="9"><p><?php _e("No members found.", "pmpro"); ?> <?php if($l) { ?><a href="?page=pmpro-memberslist&s=<?php echo esc_attr($s);?>"><?php _e("Search all levels", "pmpro");?></a>.<?php } ?></p></td>
+					<td colspan="9"><p><?php _e("No members found.", "pmpro-member-history"); ?> <?php if($l) { ?><a href="?page=pmpro-memberslist&s=<?php echo esc_attr($s);?>"><?php _e("Search all levels", "pmpro-member-history");?></a>.<?php } ?></p></td>
 				</tr>
 				<?php
 				}
@@ -382,8 +382,8 @@ function pmpro_member_history_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-member-history.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plus-add-ons/pmpro-member-history/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plus-add-ons/pmpro-member-history/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro-member-history' ) ) . '">' . __( 'Docs', 'pmpro-member-history' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro-member-history' ) ) . '">' . __( 'Support', 'pmpro-member-history' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
 	}
