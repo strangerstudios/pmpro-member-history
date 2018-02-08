@@ -117,7 +117,7 @@ function pmpro_member_history_profile_fields($user)
 						$levelhistory->enddate = date(get_option("date_format"), strtotime($levelhistory->enddate));															
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
-						<td><?php echo $level->name;?></td>
+						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro'); } ;?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->startdate))?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
 						<td><?php echo $levelhistory->enddate;?></td>
