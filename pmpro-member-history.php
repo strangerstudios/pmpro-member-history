@@ -40,6 +40,7 @@ function pmpro_member_history_profile_fields($user)
 			<thead>
 				<tr>
 					<th><?php _e('Date', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Membership Level ID', 'pmpro-member-history');?>
 					<th><?php _e('Membership Level', 'pmpro-member-history'); ?></th>
 					<th><?php _e('Invoice ID', 'pmpro-member-history'); ?></th>
 					<th><?php _e('Total Billed', 'pmpro-member-history'); ?></th>
@@ -58,6 +59,7 @@ function pmpro_member_history_profile_fields($user)
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
 						<td><?php echo date(get_option("date_format"), $invoice->timestamp)?></td>
+						<td><?php if(!empty($level)) { echo $level->id; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php echo $invoice->code; ?></a></td>
 						<td><?php echo pmpro_formatPrice($invoice->total);?></td>
@@ -95,6 +97,7 @@ function pmpro_member_history_profile_fields($user)
 			<table class="wp-list-table widefat fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
 			<thead>
 				<tr>
+					<th><?php _e('Membership Level ID', 'pmpro-member-history');?>
 					<th><?php _e('Membership Level', 'pmpro-member-history'); ?></th>
 					<th><?php _e('Start Date', 'pmpro-member-history'); ?></th>
 					<th><?php _e('Date Modified', 'pmpro-member-history'); ?></th>
@@ -117,6 +120,7 @@ function pmpro_member_history_profile_fields($user)
 						$levelhistory->enddate = date(get_option("date_format"), strtotime($levelhistory->enddate));															
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
+						<td><?php if(!empty($level)) { echo $level->id; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->startdate))?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
