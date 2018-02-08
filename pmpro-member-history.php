@@ -122,7 +122,7 @@ function pmpro_member_history_profile_fields($user)
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
 						<td><?php if(!empty($level)) { echo $level->id; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
-						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->startdate))?></td>
+						<td><?php echo ($levelhistory->startdate === '0000-00-00 00:00:00' ? __('N/A', 'pmpro-member-history') : date(get_option("date_format"), strtotime($levelhistory->startdate))); ?></td>
 						<td><?php echo date(get_option("date_format"), strtotime($levelhistory->modified))?></td>
 						<td><?php echo $levelhistory->enddate;?></td>
 						<td><?php echo pmpro_getLevelCost($levelhistory, true, true)?></td>					
