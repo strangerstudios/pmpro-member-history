@@ -268,6 +268,9 @@ function pmpro_report_member_value_page()
 			else
 				$sqlQuery .= " AND mu.status = 'active' ";
 
+			$sqlQuery .= " AND mo.gateway_environment = '" . pmpro_getOption( 'gateway_environment' ) . "' ";
+			$sqlQuery .= " AND mo.status NOT IN('token','review','pending','error','refunded') ";	
+				
 			$sqlQuery .= "GROUP BY u.ID ORDER BY u.user_registered DESC ";
 
 			$sqlQuery .= "LIMIT $start, $limit";
@@ -283,7 +286,8 @@ function pmpro_report_member_value_page()
 			else
 				$sqlQuery .= " AND mu.status = 'active' ";
 			
-			$sqlQuery .= " AND mo.status NOT IN('review','pending','error','refunded') ";
+			$sqlQuery .= " AND mo.gateway_environment = '" . pmpro_getOption( 'gateway_environment' ) . "' ";
+			$sqlQuery .= " AND mo.status NOT IN('token','review','pending','error','refunded') ";
 			
 			$sqlQuery .= "GROUP BY u.ID ORDER BY totalvalue DESC ";
 
