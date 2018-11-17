@@ -2,7 +2,7 @@
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, members, history
 Requires at least: 3.5
-Tested up to: 4.7.4
+Tested up to: 4.9.8
 Stable tag: .2.4.2
 
 Display a history of a user's Membership on the User Profile for admins only.
@@ -12,6 +12,15 @@ Display a history of a user's Membership on the User Profile for admins only.
 This plugin adds a Membership History section to the user profile, allowing you to view (in one place) all the membership levels held by the specific user. The history view is visible to admins only.
 
 == Changelog ==
+= .3 =
+* FEATURE: Updated for localization.
+* FEATURE: Added Top 10 Member report to the reports dashboard widget.
+* BUG FIX/ENHANCEMENT: Filtering out orders in token status or from different gateway environments.
+* BUG FIX/ENHANCEMENT: Fixed default member report query for better performance.
+* ENHANCEMENT: Added a discount code column to the member history table. (Thanks, Ted Barnett)
+* ENHANCEMENT: Added pmpromh_member_history_extra_cols_header and pmpromh_member_history_extra_cols_body hooks for the member history table shown in the edit user profile.
+* ENHANCEMENT: Added pmpromh_orders_extra_cols_header and pmpromh_orders_extra_cols_body hooks for the order history table shown in the edit user profile.
+
 = .2.4.2 =
 * BUG FIX: Removed the "right/wrong" language around the order totals in the member history table.
 
