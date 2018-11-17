@@ -179,11 +179,56 @@ add_action('show_user_profile', 'pmpro_member_history_profile_fields');
 
 global $pmpro_reports;
 $pmpro_reports['member_value'] = __('Member Value Report', 'pmpro-member-history');
-function pmpro_report_member_value_widget()
-{	
-?>
-<p>Show Top 10 Members Here</p>
-<?php
+function pmpro_report_member_value_widget() {	
+	global $wpdb;
+	
+	$top_ten_members = get_transient( 'pmpro_member_history_top_ten_members', false );
+	
+	if ( empty( $top_ten_members ) ) {
+		$sqlQuery = $wpdb->prepare("
+			SELECT user_id, SUM(total) as totalvalue
+			FROM $wpdb->pmpro_membership_orders
+			WHERE membership_id > 0
+				AND gateway_environment = %s
+				AND status NOT IN('token','review','pending','error','refunded')
+			GROUP BY user_id ORDER BY totalvalue DESC
+			LIMIT 10
+			", pmpro_getOption( 'gateway_environment' ) );
+		$top_ten_members = $wpdb->get_results( $sqlQuery );
+		set_transient( 'pmpro_member_history_top_ten_members', $top_ten_members, 3600 );
+	}
+	
+	if ( empty ( $top_ten_members ) ) {
+		esc_html_e( 'No paying members found.', 'pmpro-member-history' );
+	} else {
+		esc_html_e( 'Your Top 10 Members', 'pmpro-member-history' );
+		?>
+		<table class="wp-list-table widefat fixed striped">
+		<thead>
+			<tr>
+				<th scope="col"><?php esc_html_e( 'Member', 'pmpro-member-history' ) ;?></th>
+				<th scope="col"><?php esc_html_e( 'Start Date', 'pmpro-member-history' ) ;?></th>
+				<th scope="col"><?php esc_html_e( 'Total Value', 'pmpro-member-history' ) ;?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php 
+				foreach( $top_ten_members as $member ) {
+					$theuser = get_userdata( $member->user_id );
+					$totalvalue = $member->totalvalue;
+					?>
+					<tr>
+						<th scope="row"><?php echo $theuser->display_name; ?></th>
+						<th><?php echo date_i18n( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?></th>
+						<th><?php echo pmpro_formatPrice( $totalvalue ); ?></th>
+					</tr>
+					<?php
+				}
+			?>
+		</tbody>
+		</table>
+		<?php
+	}
 }
 
 function pmpro_report_member_value_page()
