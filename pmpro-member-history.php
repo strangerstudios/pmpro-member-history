@@ -197,38 +197,44 @@ function pmpro_report_member_value_widget() {
 		$top_ten_members = $wpdb->get_results( $sqlQuery );
 		set_transient( 'pmpro_member_history_top_ten_members', $top_ten_members, 3600 );
 	}
-	
-	if ( empty ( $top_ten_members ) ) {
-		esc_html_e( 'No paying members found.', 'pmpro-member-history' );
-	} else {
-		esc_html_e( 'Your Top 10 Members', 'pmpro-member-history' );
-		?>
-		<table class="wp-list-table widefat fixed striped">
-		<thead>
-			<tr>
-				<th scope="col"><?php esc_html_e( 'Member', 'pmpro-member-history' ) ;?></th>
-				<th scope="col"><?php esc_html_e( 'Start Date', 'pmpro-member-history' ) ;?></th>
-				<th scope="col"><?php esc_html_e( 'Total Value', 'pmpro-member-history' ) ;?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php 
-				foreach( $top_ten_members as $member ) {
-					$theuser = get_userdata( $member->user_id );
-					$totalvalue = $member->totalvalue;
-					?>
-					<tr>
-						<th scope="row"><?php echo $theuser->display_name; ?></th>
-						<th><?php echo date_i18n( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?></th>
-						<th><?php echo pmpro_formatPrice( $totalvalue ); ?></th>
-					</tr>
-					<?php
-				}
-			?>
-		</tbody>
-		</table>
-		<?php
-	}
+	?>
+	<span id="pmpro_report_member_value" class="pmpro_report-holder">
+		<?php if ( empty ( $top_ten_members ) ) { ?>
+			<p><?php esc_html_e( 'No paying members found.', 'pmpro-member-history' ); ?></p>
+		<?php } else { ?>
+			<p><?php esc_html_e( 'Your Top 10 Members', 'pmpro-member-history' ); ?></p>
+			<table class="wp-list-table widefat fixed striped">
+			<thead>
+				<tr>
+					<th scope="col"><?php esc_html_e( 'Member', 'pmpro-member-history' ) ;?></th>
+					<th scope="col"><?php esc_html_e( 'Start Date', 'pmpro-member-history' ) ;?></th>
+					<th scope="col"><?php esc_html_e( 'Total Value', 'pmpro-member-history' ) ;?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php 
+					foreach( $top_ten_members as $member ) {
+						$theuser = get_userdata( $member->user_id );
+						$totalvalue = $member->totalvalue;
+						?>
+						<tr>
+							<th scope="row"><?php echo $theuser->display_name; ?></th>
+							<th><?php echo date_i18n( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?></th>
+							<th><?php echo pmpro_formatPrice( $totalvalue ); ?></th>
+						</tr>
+						<?php
+					}
+				?>
+			</tbody>
+			</table>
+			<?php if ( function_exists( 'pmpro_report_member_value_page' ) ) { ?>
+				<p class="pmpro_report-button">
+					<a class="button button-primary" href="<?php echo admin_url( 'admin.php?page=pmpro-reports&report=member_value' ); ?>"><?php _e('Details', 'paid-memberships-pro' );?></a>
+				</p>
+			<?php } ?>
+	<?php } ?>
+	</span>
+	<?php
 }
 
 function pmpro_report_member_value_page()
