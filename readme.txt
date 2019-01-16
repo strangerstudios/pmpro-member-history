@@ -1,9 +1,9 @@
 === Paid Memberships Pro - Member History Add On ===
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, members, history
-Requires at least: 3.5
-Tested up to: 4.9.8
-Stable tag: .2.4.2
+Requires at least: 4
+Tested up to: 5.0.3
+Stable tag: .3
 
 Display a history of a user's Membership on the User Profile for admins only.
 
