@@ -13,7 +13,7 @@ This plugin adds a Membership History section to the user profile, allowing you 
 
 == Changelog ==
 = .3.0.1 =
-* BUG/ENHANCEMENT: Now showing pending/error/token/refunded/review (any status) orders in the history again - again? (see .2.4)
+* BUG/ENHANCEMENT: Now showing pending/error/token/refunded/review (any status) orders in the history again - again? (see .2.4) fixes issue#11
 
 = .3 =
 * FEATURE: Updated for localization.
