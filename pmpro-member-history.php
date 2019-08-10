@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Member History Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-member-history/
 Description: Display a history of a user's Membership on the User Profile for admins only.
-Version: .3
+Version: .3.0.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -20,7 +20,7 @@ function pmpro_member_history_profile_fields($user)
 	global $wpdb;
 	
 	//Show all invoices for user
-	$invoices = $wpdb->get_results("SELECT mo.*, UNIX_TIMESTAMP(mo.timestamp) as timestamp, du.code_id as code_id FROM $wpdb->pmpro_membership_orders mo LEFT JOIN $wpdb->pmpro_discount_codes_uses du ON mo.id = du.order_id WHERE mo.user_id = '$user->ID' AND (mo.status = 'success' OR mo.status = 'cancelled' OR mo.status = 'refunded' OR mo.status = '') ORDER BY mo.timestamp DESC");	
+	$invoices = $wpdb->get_results("SELECT mo.*, UNIX_TIMESTAMP(mo.timestamp) as timestamp, du.code_id as code_id FROM $wpdb->pmpro_membership_orders mo LEFT JOIN $wpdb->pmpro_discount_codes_uses du ON mo.id = du.order_id WHERE mo.user_id = '$user->ID' ORDER BY mo.timestamp DESC");	
 	$levelshistory = $wpdb->get_results("SELECT * FROM $wpdb->pmpro_memberships_users WHERE user_id = '$user->ID' ORDER BY id DESC");
 	$totalvalue = $wpdb->get_var("SELECT SUM(total) FROM $wpdb->pmpro_membership_orders WHERE user_id = '$user->ID'");
 	if($invoices || $levelshistory)
