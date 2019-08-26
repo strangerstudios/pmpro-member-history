@@ -40,14 +40,13 @@ function pmpro_member_history_profile_fields($user)
 			<thead>
 				<tr>
 					<th><?php _e('Date', 'pmpro-member-history'); ?></th>
-					<th><?php _e('Membership Level ID', 'pmpro-member-history');?>
-					<th><?php _e('Membership Level', 'pmpro-member-history'); ?></th>
 					<th><?php _e('Invoice ID', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Membership Level', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Level ID', 'pmpro-member-history');?>
 					<th><?php _e('Total Billed', 'pmpro-member-history'); ?></th>
-					<th><?php _e('Discount Used', 'pmpro-member-history'); ?></th>
+					<th><?php _e('Discount Code', 'pmpro-member-history'); ?></th>
 					<th><?php _e('Status', 'pmpro-member-history'); ?></th>
 					<?php do_action('pmpromh_orders_extra_cols_header');?>
-					<th>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,9 +58,25 @@ function pmpro_member_history_profile_fields($user)
 					?>
 					<tr<?php if($count++ % 2 == 1) { ?> class="alternate"<?php } ?>>
 						<td><?php echo date(get_option("date_format"), $invoice->timestamp)?></td>
-						<td><?php if(!empty($level)) { echo $level->id; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
+						<td>
+							<a href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php echo $invoice->code; ?></a><br />
+							<div class="row-actions">
+								<span class="edit">
+									<a title="<?php _e( 'Edit', 'pmpro-member-history' ); ?>" href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php _e( 'Edit', 'pmpro-member-history' ); ?></a>
+								</span> |
+								<span class="print">
+									<a target="_blank" title="<?php _e( 'Print', 'pmpro-member-history' ); ?>" href="<?php echo add_query_arg( array( 'action' => 'pmpro_orders_print_view', 'order' => $invoice->id ), admin_url('admin-ajax.php' ) ); ?>"><?php _e( 'Print', 'pmpro-member-history' ); ?></a>
+								</span>
+								<?php if ( function_exists( 'pmpro_add_email_order_modal' ) ) { ?>
+									 |
+									<span class="email">
+										<a title="<?php _e( 'Email', 'pmpro-member-history' ); ?>" href="#TB_inline?width=600&height=200&inlineId=email_invoice" class="thickbox email_link" data-order="<?php echo $invoice->id; ?>"><?php _e( 'Email', 'pmpro-member-history' ); ?></a>
+									</span>
+								<?php } ?>
+							</div> <!-- end .row-actions -->
+						</td>
 						<td><?php if(!empty($level)) { echo $level->name; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
-						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php echo $invoice->code; ?></a></td>
+						<td><?php if(!empty($level)) { echo $level->id; } else { _e('N/A', 'pmpro-member-history'); } ;?></td>
 						<td><?php echo pmpro_formatPrice($invoice->total);?></td>
 						<td><?php 
 							if(empty($invoice->code_id)){
@@ -82,8 +97,6 @@ function pmpro_member_history_profile_fields($user)
 							?>
 						</td>
 						<?php do_action('pmpromh_orders_extra_cols_body', $invoice);?>
-						<td><a href="admin.php?page=pmpro-orders&order=<?php echo $invoice->id;?>"><?php _e('View Order', 'pmpro-member-history'); ?></a>
-						</td>
 					</tr>
 					<?php
 				}
@@ -176,6 +189,25 @@ function pmpro_member_history_profile_fields($user)
 add_action('edit_user_profile', 'pmpro_member_history_profile_fields');
 add_action('show_user_profile', 'pmpro_member_history_profile_fields');
 
+/**
+ * Allow orders to be emailed from the member history section on user profile.
+ *
+ */
+function pmpro_member_history_add_email_order_modal() {
+	$screen = get_current_screen();
+	if ( $screen->base == 'user-edit' ) {
+		// Require the core Paid Memberships Pro Admin Functions.
+		if ( defined( 'PMPRO_DIR' ) ) {
+			require_once( PMPRO_DIR . '/adminpages/functions.php' );
+		}
+
+		// Load the email order modal.
+		if ( function_exists( 'pmpro_add_email_order_modal' ) ) {
+			pmpro_add_email_order_modal();
+		}
+	}
+}
+add_action( 'in_admin_header', 'pmpro_member_history_add_email_order_modal' );
 
 global $pmpro_reports;
 $pmpro_reports['member_value'] = __('Member Value Report', 'pmpro-member-history');
