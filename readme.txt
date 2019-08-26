@@ -13,7 +13,9 @@ This plugin adds a Membership History section to the user profile, allowing you 
 
 == Changelog ==
 = .3.0.1 =
-* BUG/ENHANCEMENT: Now showing pending/error/token/refunded/review (any status) orders in the history again - again? (see .2.4) fixes issue#11
+* BUG/ENHANCEMENT: Now showing any order status in the User's Order History.
+* BUG/ENHANCEMENT: Adding button/link to view Member Value full report from Reports Widgets on Memberships > Reports admin page.
+* ENHANCEMENT: Adding feature to Edit, Print or Email an order from the User's Order History page for PMPro v2.1+.
 
 = .3 =
 * FEATURE: Updated for localization.
