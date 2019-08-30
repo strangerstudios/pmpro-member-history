@@ -62,7 +62,7 @@ function pmpro_member_history_profile_fields( $user ) {
 							<a href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php echo $invoice->code; ?></a><br />
 							<div class="row-actions">
 								<span class="edit">
-									<a title="<?php _e( 'Edit', 'pmpro-member-history' ); ?>" href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php esc_html_e( 'Edit', 'pmpro-member-history' ); ?></a>
+									<a title="<?php esc_html_e( 'Edit', 'pmpro-member-history' ); ?>" href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php esc_html_e( 'Edit', 'pmpro-member-history' ); ?></a>
 								</span> |
 								<span class="print">
 									<a target="_blank" title="<?php esc_html_e( 'Print', 'pmpro-member-history' ); ?>" href="<?php echo add_query_arg( array( 'action' => 'pmpro_orders_print_view', 'order' => $invoice->id ), admin_url('admin-ajax.php' ) ); ?>"><?php esc_html_e( 'Print', 'pmpro-member-history' ); ?></a>
@@ -75,7 +75,7 @@ function pmpro_member_history_profile_fields( $user ) {
 								<?php } ?>
 							</div> <!-- end .row-actions -->
 						</td>
-						<td><?php if ( ! empty( $level ) ) { echo $level->name; } else { esc_html_e( 'N/A', 'pmpro-member-history'); } ?></td>
+						<td><?php if ( ! empty( $level ) ) { echo esc_html( $level->name) ; } else { esc_html_e( 'N/A', 'pmpro-member-history'); } ?></td>
 						<td><?php if ( ! empty( $level ) ) { echo $level->id; } else { esc_html_e( 'N/A', 'pmpro-member-history'); } ?></td>
 						<td><?php echo pmpro_formatPrice( $invoice->total ); ?></td>
 						<td><?php 
