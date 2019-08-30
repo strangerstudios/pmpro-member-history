@@ -134,7 +134,7 @@ function pmpro_member_history_profile_fields( $user ) {
 					} ?>
 					<tr>
 						<td><?php if ( ! empty( $level ) ) { echo $level->id; } else { esc_html_e( 'N/A', 'pmpro-member-history' ); } ?></td>
-						<td><?php if ( ! empty( $level ) ) { echo $level->name; } else { esc_html_e( 'N/A', 'pmpro-member-history' ); } ?></td>
+						<td><?php if ( ! empty( $level ) ) { echo esc_html( $level->name ); } else { esc_html_e( 'N/A', 'pmpro-member-history' ); } ?></td>
 						<td><?php echo ( $levelhistory->startdate === '0000-00-00 00:00:00' ? esc_html__('N/A', 'pmpro-member-history') : date( get_option( 'date_format' ), strtotime( $levelhistory->startdate ) ) ); ?></td>
 						<td><?php echo date( get_option( 'date_format'), strtotime( $levelhistory->modified ) ); ?></td>
 						<td><?php echo esc_html( $levelhistory->enddate ); ?></td>
