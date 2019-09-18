@@ -23,9 +23,9 @@ function pmpro_member_history_profile_fields( $user ) {
 	global $wpdb;
 
 	//Show all invoices for user
-	$invoices = $wpdb->get_results("SELECT mo.*, UNIX_TIMESTAMP(mo.timestamp) as timestamp, du.code_id as code_id FROM $wpdb->pmpro_membership_orders mo LEFT JOIN $wpdb->pmpro_discount_codes_uses du ON mo.id = du.order_id WHERE mo.user_id = '$user->ID' ORDER BY mo.timestamp DESC");	
-	$levelshistory = $wpdb->get_results("SELECT * FROM $wpdb->pmpro_memberships_users WHERE user_id = '$user->ID' ORDER BY id DESC");
-	$totalvalue = $wpdb->get_var("SELECT SUM(total) FROM $wpdb->pmpro_membership_orders WHERE user_id = '$user->ID'");
+	$invoices = $wpdb->get_results("SELECT mo.*, UNIX_TIMESTAMP(mo.timestamp) as timestamp, du.code_id as code_id FROM $wpdb->pmpro_membership_orders mo LEFT JOIN $wpdb->pmpro_discount_codes_uses du ON mo.id = du.order_id WHERE mo.user_id = '" . esc_sql( $user->ID ) . "' ORDER BY mo.timestamp DESC");	
+	$levelshistory = $wpdb->get_results("SELECT * FROM $wpdb->pmpro_memberships_users WHERE user_id = '" . esc_sql( $user->ID ) . "' ORDER BY id DESC");
+	$totalvalue = $wpdb->get_var("SELECT SUM(total) FROM $wpdb->pmpro_membership_orders WHERE user_id = '" . esc_sql( $user->ID ) . "'");
 
 	if ( $invoices || $levelshistory ) { ?>
 		<hr />
@@ -59,7 +59,7 @@ function pmpro_member_history_profile_fields( $user ) {
 					<tr>
 						<td><?php echo date( get_option( 'date_format'), $invoice->timestamp ); ?></td>
 						<td>
-							<a href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php echo $invoice->code; ?></a><br />
+							<a href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php echo esc_html( $invoice->code ); ?></a><br />
 							<div class="row-actions">
 								<span class="edit">
 									<a title="<?php esc_html_e( 'Edit', 'pmpro-member-history' ); ?>" href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php esc_html_e( 'Edit', 'pmpro-member-history' ); ?></a>
@@ -70,13 +70,13 @@ function pmpro_member_history_profile_fields( $user ) {
 								<?php if ( function_exists( 'pmpro_add_email_order_modal' ) ) { ?>
 									 |
 									<span class="email">
-										<a title="<?php esc_html_e( 'Email', 'pmpro-member-history' ); ?>" href="#TB_inline?width=600&height=200&inlineId=email_invoice" class="thickbox email_link" data-order="<?php echo $invoice->id; ?>"><?php esc_html_e( 'Email', 'pmpro-member-history' ); ?></a>
+										<a title="<?php esc_html_e( 'Email', 'pmpro-member-history' ); ?>" href="#TB_inline?width=600&height=200&inlineId=email_invoice" class="thickbox email_link" data-order="<?php echo esc_attr( $invoice->id ); ?>"><?php esc_html_e( 'Email', 'pmpro-member-history' ); ?></a>
 									</span>
 								<?php } ?>
 							</div> <!-- end .row-actions -->
 						</td>
 						<td><?php if ( ! empty( $level ) ) { echo esc_html( $level->name) ; } else { esc_html_e( 'N/A', 'pmpro-member-history'); } ?></td>
-						<td><?php if ( ! empty( $level ) ) { echo $level->id; } else { esc_html_e( 'N/A', 'pmpro-member-history'); } ?></td>
+						<td><?php if ( ! empty( $level ) ) { echo esc_html( $level->id ); } else { esc_html_e( 'N/A', 'pmpro-member-history'); } ?></td>
 						<td><?php echo pmpro_formatPrice( $invoice->total ); ?></td>
 						<td><?php 
 							if ( empty( $invoice->code_id ) ) {
@@ -84,7 +84,7 @@ function pmpro_member_history_profile_fields( $user ) {
 							} else {
 								$discountQuery = "SELECT c.code FROM $wpdb->pmpro_discount_codes c WHERE c.id = " . $invoice->code_id . " LIMIT 1";
 								$discount_code = $wpdb->get_row( $discountQuery );
-								echo '<a href="admin.php?page=pmpro-discountcodes&edit='.$invoice->code_id.'">' . esc_html( $discount_code->code ) . '</a>';
+								echo '<a href="admin.php?page=pmpro-discountcodes&edit='. esc_attr( $invoice->code_id ) .'">' . esc_html( $discount_code->code ) . '</a>';
 							}
 						?></td>
 						<td>
@@ -128,12 +128,12 @@ function pmpro_member_history_profile_fields( $user ) {
 					$level = pmpro_getLevel( $levelhistory->membership_id );
 
 					if ( $levelhistory->enddate === null || $levelhistory->enddate == '0000-00-00 00:00:00' ) {
-						$levelhistory->enddate = 'Never';
+						$levelhistory->enddate = __( 'Never', 'pmpro-member-history' );
 					} else {
 						$levelhistory->enddate = date( get_option( 'date_format'), strtotime( $levelhistory->enddate ) );
 					} ?>
 					<tr>
-						<td><?php if ( ! empty( $level ) ) { echo $level->id; } else { esc_html_e( 'N/A', 'pmpro-member-history' ); } ?></td>
+						<td><?php if ( ! empty( $level ) ) { echo esc_html( $level->id ); } else { esc_html_e( 'N/A', 'pmpro-member-history' ); } ?></td>
 						<td><?php if ( ! empty( $level ) ) { echo esc_html( $level->name ); } else { esc_html_e( 'N/A', 'pmpro-member-history' ); } ?></td>
 						<td><?php echo ( $levelhistory->startdate === '0000-00-00 00:00:00' ? esc_html__('N/A', 'pmpro-member-history') : date( get_option( 'date_format' ), strtotime( $levelhistory->startdate ) ) ); ?></td>
 						<td><?php echo date( get_option( 'date_format'), strtotime( $levelhistory->modified ) ); ?></td>
@@ -259,7 +259,7 @@ function pmpro_report_member_value_widget() {
 					$totalvalue = $member->totalvalue;
 					?>
 					<tr>
-						<th scope="row"><?php echo $theuser->display_name; ?></th>
+						<th scope="row"><?php echo esc_html( $theuser->display_name ); ?></th>
 						<th><?php echo date_i18n( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?></th>
 						<th><?php echo pmpro_formatPrice( $totalvalue ); ?></th>
 					</tr>
@@ -417,18 +417,18 @@ function pmpro_report_member_value_page() {
 								<?php echo get_avatar( $theuser->ID, 32 ); ?>
 								<strong>
 									<?php
-										$userlink = '<a href="user-edit.php?user_id=' . $theuser->ID . '">' . $theuser->user_login . '</a>';
+										$userlink = '<a href="user-edit.php?user_id=' . intval( $theuser->ID ) . '">' . $theuser->user_login . '</a>';
 										$userlink = apply_filters( 'pmpro_members_list_user_link', $userlink, $theuser );
 										echo $userlink;
 									?>
 								</strong>
 							</td>
 							<td>
-								<?php echo $theuser->first_name; ?> <?php echo $theuser->last_name; ?>
+								<?php echo esc_html( $theuser->first_name ); ?> <?php echo esc_html( $theuser->last_name ); ?>
 								<?php if ( ! empty( $theuser->first_name ) ) echo '<br />'; ?>
 								<a href="mailto:<?php echo esc_attr( $theuser->user_email ); ?>"><?php echo $theuser->user_email; ?></a>
 							</td>
-							<td><?php echo $auser->membership; ?></td>
+							<td><?php echo esc_html( $auser->membership ); ?></td>
 							<td><?php echo date( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?></td>
 							<td>
 								<?php
