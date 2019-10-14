@@ -330,7 +330,8 @@ function pmpro_report_member_value_page() {
 	</ul>
 	<p class="search-box">
 		<label class="hidden" for="post-search-input"><?php _e( 'Search Members', 'pmpro-member-history' );?>:</label>
-		<input type="hidden" name="page" value="pmpro-memberslist" />
+		<input type="hidden" name="page" value="pmpro-reports" />
+		<input type="hidden" name="report" value="member_value" />
 		<input id="post-search-input" type="text" value="<?php echo esc_attr( $s ); ?>" name="s" />
 		<input class="button" type="submit" value="<?php _e( 'Search Members', 'pmpro-member-history' ); ?>" />
 	</p>
