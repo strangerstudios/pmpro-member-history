@@ -43,7 +43,7 @@ function pmpro_member_history_profile_fields( $user ) {
 				<tr>
 					<th><?php _e( 'Date', 'pmpro-member-history' ); ?></th>
 					<th><?php _e( 'Invoice ID', 'pmpro-member-history' ); ?></th>
-					<th><?php _e( 'Membership Level', 'pmpro-member-history' ); ?></th>
+					<th><?php _e( 'Level', 'pmpro-member-history' ); ?></th>
 					<th><?php _e( 'Level ID', 'pmpro-member-history' ); ?>
 					<th><?php _e( 'Total Billed', 'pmpro-member-history' ); ?></th>
 					<th><?php _e( 'Discount Code', 'pmpro-member-history' ); ?></th>
@@ -58,7 +58,7 @@ function pmpro_member_history_profile_fields( $user ) {
 					?>
 					<tr>
 						<td><?php echo date( get_option( 'date_format'), $invoice->timestamp ); ?></td>
-						<td>
+						<td class="order_code column-order_code has-row-actions">
 							<a href="<?php echo add_query_arg( array( 'page' => 'pmpro-orders', 'order' => $invoice->id ), admin_url('admin.php' ) ); ?>"><?php echo $invoice->code; ?></a><br />
 							<div class="row-actions">
 								<span class="edit">
@@ -112,8 +112,8 @@ function pmpro_member_history_profile_fields( $user ) {
 			<table class="wp-list-table widefat striped fixed" width="100%" cellpadding="0" cellspacing="0" border="0">
 			<thead>
 				<tr>
-					<th><?php _e( 'Membership Level ID', 'pmpro-member-history' ); ?>
-					<th><?php _e( 'Membership Level', 'pmpro-member-history' ); ?></th>
+					<th><?php _e( 'Level ID', 'pmpro-member-history' ); ?>
+					<th><?php _e( 'Level', 'pmpro-member-history' ); ?></th>
 					<th><?php _e( 'Start Date', 'pmpro-member-history' ); ?></th>
 					<th><?php _e( 'Date Modified', 'pmpro-member-history' ); ?></th>
 					<th><?php _e( 'End Date', 'pmpro-member-history' ); ?></th>
@@ -198,7 +198,7 @@ add_action('show_user_profile', 'pmpro_member_history_profile_fields');
  */
 function pmpro_member_history_add_email_order_modal() {
 	$screen = get_current_screen();
-	if ( $screen->base == 'user-edit' ) {
+	if ( $screen->base == 'user-edit' || $screen->base == 'profile' ) {
 		// Require the core Paid Memberships Pro Admin Functions.
 		if ( defined( 'PMPRO_DIR' ) ) {
 			require_once( PMPRO_DIR . '/adminpages/functions.php' );
@@ -255,12 +255,26 @@ function pmpro_report_member_value_widget() {
 		<tbody>
 			<?php 
 				foreach ( $top_ten_members as $member ) {
-					$theuser = get_userdata( $member->user_id );
 					$totalvalue = $member->totalvalue;
+					$theuser = get_userdata( $member->user_id );
 					?>
 					<tr>
-						<th scope="row"><?php echo $theuser->display_name; ?></th>
-						<th><?php echo date_i18n( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?></th>
+						<th scope="row">
+							<?php if ( ! empty( $theuser ) ) { ?>
+								<a title="<?php _e( 'Edit User', 'pmpro-member-history' ); ?>" href="<?php echo get_edit_user_link( $theuser->ID ); ?>"><?php echo $theuser->display_name; ?></a>
+							<?php } elseif ( $member->user_id > 0 ) { ?>
+								[<?php _e( 'deleted', 'paid-memberships-pro' ); ?>]
+							<?php } else { ?>
+								[<?php _e( 'none', 'paid-memberships-pro' ); ?>]
+							<?php } ?>
+						</th>
+						<th>
+							<?php if ( ! empty( $theuser ) ) { ?>
+								<?php echo date_i18n( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?>
+							<?php } else { ?>
+								-
+							<?php } ?>
+						</th>
 						<th><?php echo pmpro_formatPrice( $totalvalue ); ?></th>
 					</tr>
 					<?php
@@ -438,7 +452,7 @@ function pmpro_report_member_value_page() {
 									} ?>
 							</td>
 							<td>
-								<?php echo pmpro_formatPrice( $totalvalue2 ); ?>					
+								<?php echo pmpro_formatPrice( $totalvalue2 ); ?>
 							</td>
 						</tr>
 					<?php
