@@ -1,9 +1,9 @@
 === Paid Memberships Pro - Member History Add On ===
 Contributors: strangerstudios
 Tags: pmpro, paid memberships pro, members, history
-Requires at least: 4
-Tested up to: 5.0.3
-Stable tag: .3.0.1
+Requires at least: 4.7
+Tested up to: 5.2.4
+Stable tag: .3.1
 
 Display a history of a user's Membership on the User Profile for admins only.
 
@@ -12,6 +12,12 @@ Display a history of a user's Membership on the User Profile for admins only.
 This plugin adds a Membership History section to the user profile, allowing you to view (in one place) all the membership levels held by the specific user. The history view is visible to admins only.
 
 == Changelog ==
+= .3.1 =
+* SECURITY: Escaped content on output.
+* BUG FIX: Filtering members on Member Value Report would redirect to Member's List.
+* ENHANCEMENT: Optimized the SQL for the Member Value Report.
+* ENHANCEMENT: Handled 'deleted' users from Member Value Report.
+
 = .3.0.1 =
 * BUG/ENHANCEMENT: Now showing any order status in the User's Order History.
 * BUG/ENHANCEMENT: Adding button/link to view Member Value full report from Reports Widgets on Memberships > Reports admin page.
