@@ -1,0 +1,214 @@
+# Paid Memberships Pro - Member History Add On: WordPress plugin.
+# Copyright (C) 2015
+# This file is distributed under the same license as the PACKAGE package.
+# Stranger Studios <info@strangerstudios.com>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
+"POT-Creation-Date: 2021-03-16 12:38-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pmpro-member-history.php:44 pmpro-member-history.php:44
+msgid "Member History"
+msgstr ""
+
+#: pmpro-member-history.php:45 pmpro-member-history.php:417
+#: pmpro-member-history.php:45 pmpro-member-history.php:417
+msgid "Total Paid"
+msgstr ""
+
+#: pmpro-member-history.php:47 pmpro-member-history.php:47
+msgid "Order History"
+msgstr ""
+
+#: pmpro-member-history.php:48 pmpro-member-history.php:48
+msgid "Membership Levels History"
+msgstr ""
+
+#: pmpro-member-history.php:56 pmpro-member-history.php:56
+msgid "Date"
+msgstr ""
+
+#: pmpro-member-history.php:57 pmpro-member-history.php:57
+msgid "Invoice ID"
+msgstr ""
+
+#: pmpro-member-history.php:58 pmpro-member-history.php:128
+#: pmpro-member-history.php:58 pmpro-member-history.php:128
+msgid "Level"
+msgstr ""
+
+#: pmpro-member-history.php:59 pmpro-member-history.php:127
+#: pmpro-member-history.php:59 pmpro-member-history.php:127
+msgid "Level ID"
+msgstr ""
+
+#: pmpro-member-history.php:60 pmpro-member-history.php:60
+msgid "Total Billed"
+msgstr ""
+
+#: pmpro-member-history.php:61 pmpro-member-history.php:61
+msgid "Discount Code"
+msgstr ""
+
+#: pmpro-member-history.php:62 pmpro-member-history.php:133
+#: pmpro-member-history.php:62 pmpro-member-history.php:133
+msgid "Status"
+msgstr ""
+
+#: pmpro-member-history.php:77 pmpro-member-history.php:77
+msgid "Edit"
+msgstr ""
+
+#: pmpro-member-history.php:80 pmpro-member-history.php:80
+msgid "Print"
+msgstr ""
+
+#: pmpro-member-history.php:85 pmpro-member-history.php:85
+msgid "Email"
+msgstr ""
+
+#: pmpro-member-history.php:90 pmpro-member-history.php:91
+#: pmpro-member-history.php:148 pmpro-member-history.php:149
+#: pmpro-member-history.php:150 pmpro-member-history.php:90
+#: pmpro-member-history.php:91 pmpro-member-history.php:148
+#: pmpro-member-history.php:149 pmpro-member-history.php:150
+msgid "N/A"
+msgstr ""
+
+#: pmpro-member-history.php:119 pmpro-member-history.php:119
+msgid "No membership orders found."
+msgstr ""
+
+#: pmpro-member-history.php:129 pmpro-member-history.php:263
+#: pmpro-member-history.php:129 pmpro-member-history.php:263
+msgid "Start Date"
+msgstr ""
+
+#: pmpro-member-history.php:130 pmpro-member-history.php:130
+msgid "Date Modified"
+msgstr ""
+
+#: pmpro-member-history.php:131 pmpro-member-history.php:131
+msgid "End Date"
+msgstr ""
+
+#: pmpro-member-history.php:132 pmpro-member-history.php:132
+msgid "Level Cost"
+msgstr ""
+
+#: pmpro-member-history.php:171 pmpro-member-history.php:171
+msgid "No membership history found."
+msgstr ""
+
+#: pmpro-member-history.php:233 pmpro-member-history.php:313
+#: pmpro-member-history.php:233 pmpro-member-history.php:313
+msgid "Member Value Report"
+msgstr ""
+
+#: pmpro-member-history.php:254 pmpro-member-history.php:254
+msgid "No paying members found."
+msgstr ""
+
+#: pmpro-member-history.php:256 pmpro-member-history.php:256
+msgid "Your Top 10 Members"
+msgstr ""
+
+#: pmpro-member-history.php:262 pmpro-member-history.php:262
+msgid "Member"
+msgstr ""
+
+#: pmpro-member-history.php:264 pmpro-member-history.php:264
+msgid "Total Value"
+msgstr ""
+
+#: pmpro-member-history.php:276 pmpro-member-history.php:276
+msgid "Edit User"
+msgstr ""
+
+#: pmpro-member-history.php:278 pmpro-member-history.php:278
+msgid "deleted"
+msgstr ""
+
+#: pmpro-member-history.php:280 pmpro-member-history.php:280
+msgid "none"
+msgstr ""
+
+#: pmpro-member-history.php:299 pmpro-member-history.php:299
+msgid "Details"
+msgstr ""
+
+#: pmpro-member-history.php:332 pmpro-member-history.php:332
+msgid "Show"
+msgstr ""
+
+#: pmpro-member-history.php:334 pmpro-member-history.php:334
+msgid "All Levels"
+msgstr ""
+
+#: pmpro-member-history.php:344 pmpro-member-history.php:348
+#: pmpro-member-history.php:344 pmpro-member-history.php:348
+msgid "Search Members"
+msgstr ""
+
+#: pmpro-member-history.php:406 pmpro-member-history.php:406
+#, php-format
+msgid "%d members found."
+msgstr ""
+
+#: pmpro-member-history.php:411 pmpro-member-history.php:411
+msgid "ID"
+msgstr ""
+
+#: pmpro-member-history.php:412 pmpro-member-history.php:412
+msgid "Username"
+msgstr ""
+
+#: pmpro-member-history.php:413 pmpro-member-history.php:413
+msgid "Name"
+msgstr ""
+
+#: pmpro-member-history.php:414 pmpro-member-history.php:414
+msgid "Current Membership"
+msgstr ""
+
+#: pmpro-member-history.php:415 pmpro-member-history.php:415
+msgid "Joined"
+msgstr ""
+
+#: pmpro-member-history.php:416 pmpro-member-history.php:416
+msgid "Expires"
+msgstr ""
+
+#: pmpro-member-history.php:465 pmpro-member-history.php:465
+msgid "No members found."
+msgstr ""
+
+#: pmpro-member-history.php:465 pmpro-member-history.php:465
+msgid "Search all levels"
+msgstr ""
+
+#: pmpro-member-history.php:486 pmpro-member-history.php:486
+msgid "Docs"
+msgstr ""
+
+#: pmpro-member-history.php:486 pmpro-member-history.php:486
+msgid "View Documentation"
+msgstr ""
+
+#: pmpro-member-history.php:487 pmpro-member-history.php:487
+msgid "Support"
+msgstr ""
+
+#: pmpro-member-history.php:487 pmpro-member-history.php:487
+msgid "Visit Customer Support Forum"
+msgstr ""
