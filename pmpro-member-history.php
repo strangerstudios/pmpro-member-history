@@ -27,7 +27,7 @@ function pmpro_member_history_profile_fields( $user ) {
 
 	$levelshistory = $wpdb->get_results("SELECT * FROM $wpdb->pmpro_memberships_users WHERE user_id = '$user->ID' ORDER BY id DESC");
 
-	$totalvalue = $wpdb->get_var("SELECT SUM(total) FROM $wpdb->pmpro_membership_orders WHERE user_id = '$user->ID'");
+	$totalvalue = $wpdb->get_var("SELECT SUM(total) FROM $wpdb->pmpro_membership_orders WHERE user_id = '$user->ID' AND status NOT IN('token','review','pending','error','refunded')");
 
 	if ( $invoices || $levelshistory ) { ?>
 		<hr />
@@ -261,7 +261,7 @@ function pmpro_report_member_value_widget() {
 					$theuser = get_userdata( $member->user_id );
 					?>
 					<tr>
-						<th scope="row">
+						<td scope="row">
 							<?php if ( ! empty( $theuser ) ) { ?>
 								<a title="<?php esc_html_e( 'Edit User', 'pmpro-member-history' ); ?>" href="<?php echo get_edit_user_link( $theuser->ID ); ?>"><?php echo $theuser->display_name; ?></a>
 							<?php } elseif ( $member->user_id > 0 ) { ?>
@@ -269,15 +269,15 @@ function pmpro_report_member_value_widget() {
 							<?php } else { ?>
 								[<?php _e( 'none', 'paid-memberships-pro' ); ?>]
 							<?php } ?>
-						</th>
-						<th>
+						</td>
+						<td>
 							<?php if ( ! empty( $theuser ) ) { ?>
 								<?php echo date_i18n( get_option( 'date_format' ), strtotime( $theuser->user_registered, current_time( 'timestamp' ) ) ); ?>
 							<?php } else { ?>
 								-
 							<?php } ?>
-						</th>
-						<th><?php echo pmpro_formatPrice( $totalvalue ); ?></th>
+						</td>
+						<td><?php echo pmpro_formatPrice( $totalvalue ); ?></td>
 					</tr>
 					<?php
 				}
